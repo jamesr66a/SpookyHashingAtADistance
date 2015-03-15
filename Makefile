@@ -1,4 +1,4 @@
-LDFLAGS += -L/usr/local/lib -lgrpc++_unsecure -lgrpc -lgpr -lprotobuf -lpthread -ldl
+LDFLAGS += -L/usr/local/lib -lgrpc++_unsecure -lgrpc -lgpr -lprotobuf -lpthread -ldl -lgflags -pthread
 LIBRARY_PATH = /usr/local/lib
 
 GRPC_CPP_PLUGIN = grpc_cpp_plugin
@@ -8,7 +8,7 @@ client: service_proto client.cc
 	g++ -std=c++11 -O3 -o ./client SpookyService.pb.cc client.cc $(LDFLAGS)
 
 server: spooky_hash service_proto server.cc
-	g++ -std=c++11 -O3 -o ./server spooky.o SpookyService.pb.cc server.cc $(LDFLAGS) 
+	g++ -g -std=c++11 -O3 -o ./server spooky.o SpookyService.pb.cc server.cc $(LDFLAGS) 
 
 spooky_hash : SpookyV2.h SpookyV2.cpp
 	g++ -c -O3 -o ./spooky.o SpookyV2.cpp

@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <gflags/gflags.h>
 #include <grpc/grpc.h>
 #include <grpc++/channel_arguments.h>
 #include <grpc++/channel_interface.h>
@@ -10,6 +11,9 @@
 #include <memory>
 
 #include "SpookyService.pb.h"
+
+DEFINE_string(server_address, "localhost:50052",
+              "Server to call the SpookyHashService on");
 
 namespace spooky {
 using namespace grpc;
@@ -44,13 +48,19 @@ private:
 
 } // namespace spooky
 
-int main() {
+int main(int argc, char **argv) {
+  gflags::ParseCommandLineFlags(&argc, &argv, true);
   grpc_init();
 
-  spooky::SpookyServiceClient client(grpc::CreateChannel(
-      "localhost:50051", grpc::InsecureCredentials(), grpc::ChannelArguments()));
-  
-  std::string data("the quick brown fox");
+  spooky::SpookyServiceClient client(
+      grpc::CreateChannel(FLAGS_server_address, grpc::InsecureCredentials(),
+                          grpc::ChannelArguments()));
+
+  std::cin >> std::noskipws;
+  std::istream_iterator<char> it(std::cin);
+  std::istream_iterator<char> end;
+  std::string data(it, end);
+
   std::pair<uint64_t, uint64_t> hash = client.Hash128(data);
 
   std::cout << hash.first << " " << hash.second << std::endl;
