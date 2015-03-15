@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package spooky;
+
+service SpookyHashService {
+  rpc Hash128(HashRequest) returns (HashResponse) {}
+}
+
+message HashRequest {
+  bytes data = 1;
+  uint64 seed1 = 2;
+  uint64 seed2 = 3;
+}
+
+message HashResponse {
+  uint64 hash1 = 2;
+  uint64 hash2 = 3;
+}
