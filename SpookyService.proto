@@ -3,7 +3,7 @@ syntax = "proto3";
 package spooky;
 
 service SpookyHashService {
-  rpc Hash128(HashRequest) returns (HashResponse) {}
+  rpc Hash128(HashRequest) returns(HashResponse) {}
 }
 
 message HashRequest {

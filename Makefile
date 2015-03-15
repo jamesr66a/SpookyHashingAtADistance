@@ -8,13 +8,13 @@ client: service_proto client.cc
 	g++ -std=c++11 -O3 -o ./client SpookyService.pb.cc client.cc $(LDFLAGS)
 
 server: spooky_hash service_proto server.cc
-	g++ -g -std=c++11 -O3 -o ./server spooky.o SpookyService.pb.cc server.cc $(LDFLAGS) 
+	g++ -g -std=c++11 -O3 -o ./server third_party/spooky.o SpookyService.pb.cc server.cc $(LDFLAGS) 
 
-spooky_hash : SpookyV2.h SpookyV2.cpp
-	g++ -c -O3 -o ./spooky.o SpookyV2.cpp
+spooky_hash : third_party/SpookyV2.h third_party/SpookyV2.cpp
+	g++ -c -O3 -o ./third_party/spooky.o third_party/SpookyV2.cpp
 
 service_proto: SpookyService.proto
 	protoc --cpp_out=. --grpc_out=. --plugin=protoc-gen-grpc=$(GRPC_CPP_PLUGIN_PATH) SpookyService.proto
 	
 clean:
-	rm SpookyService.pb.cc SpookyService.pb.h spooky.o server client
+	rm SpookyService.pb.cc SpookyService.pb.h third_party/spooky.o server client

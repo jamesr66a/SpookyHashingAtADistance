@@ -4,7 +4,7 @@
 #include <grpc++/server_credentials.h>
 #include <iostream>
 
-#include "SpookyV2.h"
+#include "third_party/SpookyV2.h"
 #include "SpookyService.pb.h"
 
 DEFINE_string(server_address, "0.0.0.0:50051", "Server address to expose the "
