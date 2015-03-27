@@ -37,6 +37,7 @@ public:
                                                 response.hash2());
     } else {
       std::cerr << "sux";
+      return std::make_pair<uint64_t, uint64_t>(0,0);
     }
   }
 

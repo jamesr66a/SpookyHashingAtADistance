@@ -4,17 +4,24 @@ LIBRARY_PATH = /usr/local/lib
 GRPC_CPP_PLUGIN = grpc_cpp_plugin
 GRPC_CPP_PLUGIN_PATH ?= `which $(GRPC_CPP_PLUGIN)`
 
+CXX = g++ 
+CXXFLAGS = -Wall -Werror -std=c++11
+
+DEPRECATION_WARNING = "WARNING: Build using make is deprecated. Please migrate to bazel"
+ 
 client: service client.cc
-	g++ -DNDEBUG -std=c++11 -O3 -o ./client service.o client.cc $(LDFLAGS)
+	@echo $(DEPRECATION_WARNING) 
+	$(CXX) $(CXXFLAGS) -o ./client service.o client.cc $(LDFLAGS)
 
 server: spooky_hash service server.cc
-	g++ -DNDEBUG -std=c++11 -O3 -o ./server third_party/spooky.o service.o server.cc $(LDFLAGS) 
+	@echo $(value DEPRECATION_WARNING)
+	$(CXX) $(CXXFLAGS) -o ./server third_party/spooky.o service.o server.cc $(LDFLAGS) 
 
 service: service_proto
-	g++ -DNDEBUG -c -std=c++11 -o ./service.o SpookyService.pb.cc
+	$(CXX) $(CXXFLAGS) -c -o ./service.o SpookyService.pb.cc
 
 spooky_hash : third_party/SpookyV2.h third_party/SpookyV2.cpp
-	g++ -c -O3 -o ./third_party/spooky.o third_party/SpookyV2.cpp
+	$(CXX) $(CXXFLAGS) -c -o ./third_party/spooky.o third_party/SpookyV2.cpp
 
 service_proto: SpookyService.proto
 	protoc --cpp_out=. --grpc_out=. --plugin=protoc-gen-grpc=$(GRPC_CPP_PLUGIN_PATH) SpookyService.proto
