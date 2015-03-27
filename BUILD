@@ -1,3 +1,4 @@
+#Note that this should be changed as soon as bazel's support for protocol buffers is working
 genrule(
   name = "service_proto",
   srcs = ["SpookyService.proto"],
