@@ -12,7 +12,7 @@
 
 #include "SpookyService.pb.h"
 
-DEFINE_string(server_address, "localhost:50052",
+DEFINE_string(server_address, "localhost:50051",
               "Server to call the SpookyHashService on");
 
 namespace spooky {
