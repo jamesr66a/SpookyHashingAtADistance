@@ -3,7 +3,6 @@ genrule(
   srcs = ["SpookyService.proto"],
   outs = ["SpookyService.pb.cc", "SpookyService.pb.h"],
   cmd = "protoc --cpp_out=bazel-out/local_linux-fastbuild/genfiles/spooky/.. --grpc_out=bazel-out/local_linux-fastbuild/genfiles/spooky/.. --plugin=protoc-gen-grpc=/usr/local/bin/grpc_cpp_plugin spooky/SpookyService.proto"
-#  cmd = "echo 'test' > $(@D)/SpookyService.pb.cc; echo 'test' > $(@D)/SpookyService.pb.h"
 )
 
 cc_binary(
