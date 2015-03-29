@@ -4,8 +4,13 @@ import os, subprocess, distutils.dir_util, ctypes, getopt, sys
 from ctypes.util import find_library
 
 bazel_repo = "https://github.com/google/bazel.git"
+
 grpc_repo = "https://github.com/grpc/grpc.git"
+grpc_commit = "bc6f3f04d81dbe71433d1187767c7263cef66764"
+
 gflags_repo = "https://github.com/gflags/gflags.git"
+gflags_commit = "16a168763e2cb41f8bf9f40505fcba494e316a35"
+
 protobuf_repo = "https://github.com/google/protobuf.git"
 
 par_build_count = 9
@@ -60,6 +65,9 @@ def install_grpc():
       print "ERROR cloning grpc repo"
       exit()
   os.chdir("./grpc")
+  if subprocess.call(["git", "checkout", grpc_commit]) != 0:
+    print "Clould not checkout grpc commit"
+    exit()
   if subprocess.call(["git", "submodule", "update", "--init"]) != 0:
     print "Could not git submodule update --init"
     exit()
@@ -96,6 +104,9 @@ def install_gflags():
     print "ERROR cloning gflags"
     exit()
   os.chdir("./gflags")
+  if subprocess.call(["git", "checkout", gflags_commit]) != 0:
+    print "Could not checkout gflags commit"
+    exit()
   if not os.path.exists("./build"):
     os.makedirs("./build")
   os.chdir("./build")
