@@ -35,7 +35,7 @@ void RunServer() {
   spooky::SpookyServiceImpl service;
 
   grpc::ServerBuilder builder;
-  builder.AddPort(FLAGS_server_address, grpc::InsecureServerCredentials());
+  builder.AddListeningPort(FLAGS_server_address, grpc::InsecureServerCredentials());
   builder.RegisterService(&service);
   std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
   std::cout << "Server listening on " << FLAGS_server_address << std::endl;

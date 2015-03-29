@@ -9,12 +9,12 @@ cc_binary(
   name = "server",
   srcs = ["server.cc", "third_party/SpookyV2.cpp", "SpookyService.pb.cc", "SpookyService.pb.h"],
   includes = ["."],
-  linkopts = ["-L/usr/local/lib", "-lgrpc++_unsecure", "-lgrpc", "-lgpr", "-lprotobuf", "-lpthread", "-ldl", "-lgflags", "-pthread"],
+  linkopts = ["-L/usr/local/lib", "-Lspooky/third_party/grpc/libs/opt/protobuf/", "-lgrpc_unsecure", "-lgrpc++_unsecure", "-lgrpc", "-lgpr", "-lprotobuf", "-lpthread", "-ldl", "-lgflags", "-pthread"]
 )
 
 cc_binary(
   name = "client",
   srcs = ["client.cc", "third_party/SpookyV2.cpp", "SpookyService.pb.cc", "SpookyService.pb.h"],
   includes = ["."],
-  linkopts = ["-L/usr/local/lib", "-lgrpc++_unsecure", "-lgrpc", "-lgpr", "-lprotobuf", "-lpthread", "-ldl", "-lgflags", "-pthread"],
+  linkopts = ["-Lspooky/third_party/grpc/libs/opt", "-lgrpc++_unsecure", "-lgrpc", "-lgpr", "-lprotobuf", "-lpthread", "-ldl", "-lgflags", "-pthread"],
 )
