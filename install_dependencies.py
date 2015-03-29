@@ -113,19 +113,19 @@ def install_gflags():
 os.chdir("spooky/third_party")
 
 bazel_path = which("bazel")
-if bazel_path == None and not os.path.exists("./bazel/output/bazel"):
-  bazel_path = install_bazel()
+if bazel_path == None:
+  if not os.path.exists("./bazel/output/bazel"):
+    bazel_path = install_bazel()
+  else:
+    bazel_path = "./bazel/output/bazel"
 
 if bazel_path != None: 
   print "Bazel executable located: " + bazel_path 
 
-os.chdir("..")
 if not os.path.exists("bazel"):
   os.symlink(bazel_path, "bazel")
 
-distutils.dir_util.copy_tree(os.path.dirname(bazel_path) + "/../base_workspace/", "../")
-
-os.chdir("third_party")
+distutils.dir_util.copy_tree(os.path.dirname(bazel_path) + "/../base_workspace/", "../../")
 
 if try_load_so("protobuf"):
   print "libprotobuf found"
