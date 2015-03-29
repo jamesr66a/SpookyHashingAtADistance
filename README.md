@@ -20,7 +20,7 @@ Note: a Makefile is still present but its use is deprecated. Bazel is the offici
 
 ## Building
 
-The python script ./install.py will clone, build and install the needed dependencies. Installation of grpc assumes openjdk-8 is present on the system.
+The python script ./install_dependencies.py will clone, build and install the needed dependencies. Installation of grpc assumes openjdk-8 is present on the system.
 
 The client can be built with `bazel build client`. Similarly, the server can be built with `bazel build server`.
 
