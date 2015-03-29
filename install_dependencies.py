@@ -31,6 +31,9 @@ def try_load_so(name, version=-1):
 
 def install_protobuf():
   print "Installing protobuf"
+  if subprocess.call(["sudo", "apt-get", "install", "curl", "autoconf", "libtool"]) != 0:
+    print "Could not fetch depedencies. Continuing anyway"
+
   if not os.path.exists("./protobuf"):
     if subprocess.call(["git", "clone", protobuf_repo]) != 0:
       print "Error cloning protobuf repo"
@@ -78,9 +81,22 @@ def which(file):
   return None
 
 def install_bazel():
-  if subprocess.call(["git", "clone", bazel_repo]) != 0:
-    print "ERROR cloning bazel repo"
-    exit()
+  if subprocess.call(["sudo", "add-apt-repository", "ppa:webupd8team/java"]) != 0:
+    print "Failed to add apt repository. Perhaps this is not a debian-based system. Continuing anyway."
+  else:
+    if subprocess.call(["sudo", "apt-get", "update"]) != 0:
+      print "Could not update apt. Continuing anyway"
+    else:
+      if subprocess.call(["sudo", "apt-get", "install", "oracle-java8-installer"]) != 0:
+        print "Could not install orace jdk8. Continuing anyway"
+
+  if subprocess.call(["sudo", "apt-get", "install", "libarchive-dev", "pkg-config", "zip", "g++", "zlib1g-dev"]) != 0:
+    print "Could not install required package dependencies. Continuing anyway"
+
+  if not os.path.exists("./bazel"):
+    if subprocess.call(["git", "clone", bazel_repo]) != 0:
+      print "ERROR cloning bazel repo"
+      exit()
   os.chdir("./bazel")
   if subprocess.call(["./compile.sh"]) != 0:
     print "ERROR compiling bazel"
@@ -92,6 +108,9 @@ def install_bazel():
   return "./bazel/output/bazel"
 
 def install_gflags():
+  if subprocess.call(["sudo", "apt-get", "install", "cmake"]) != 0:
+    print "Failed to install gflags depedencies. COntinuing anyway"
+
   if not os.path.exists("./gflags") and subprocess.call(["git", "clone", gflags_repo]) != 0:
     print "ERROR cloning gflags"
     exit()
