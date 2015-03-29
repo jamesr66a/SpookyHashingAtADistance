@@ -39,8 +39,11 @@ def install_protobuf():
   if subprocess.call(["git", "checkout", "tags/v3.0.0-alpha-2"]) != 0:
     print "Error checking out 3.0.0 tag of protobuf"
     exit()
-  if subprocess.call(["./configure"]) != 0:
+  if subprocess.call(["./autogen.sh"]) != 0:
     print "Error calling autogen on protobuf"
+    exit()
+  if subprocess.call(["./configure"]) != 0:
+    print "Error calling configure on protobuf"
     exit()
   if subprocess.call(["make", "-j%s" % par_build_count]) != 0:
     print "Error building protobuf"
