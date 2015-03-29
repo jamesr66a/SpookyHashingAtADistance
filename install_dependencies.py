@@ -122,8 +122,10 @@ if bazel_path == None:
 if bazel_path != None: 
   print "Bazel executable located: " + bazel_path 
 
-if not os.path.exists("bazel"):
-  os.symlink(bazel_path, "bazel")
+bazel_path = os.path.abspath(bazel_path)
+
+if not os.path.exists("../bazel"):
+  os.symlink(bazel_path, "../bazel")
 
 distutils.dir_util.copy_tree(os.path.dirname(bazel_path) + "/../base_workspace/", "../../")
 
